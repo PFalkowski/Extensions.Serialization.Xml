@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using Xunit;
 
@@ -42,6 +43,38 @@ namespace Extensions.Serialization.Xml.Test
             Assert.Equal(30, received[3].Age);
         }
 
+        [Fact]
+        public void SerializeToXmlDoc()
+        {
+            var tested = PersonsList.SerializeToXmlDoc();
+
+            var navigator = tested.CreateNavigator();
+
+            Assert.Equal(5, (double)navigator.Evaluate("count(//FirstName)"));
+            Assert.Equal(5, (double)navigator.Evaluate("count(//Age)"));
+            Assert.Equal(27, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Alex\"]/Age/text())")));
+            Assert.Equal(35, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Cloe\"]/Age/text())")));
+            Assert.Equal(45, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Jack\"]/Age/text())")));
+            Assert.Equal(30, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())")));
+        }
+
+        [Fact]
+        public void DeserializeXmlDoc()
+        {
+            var input = new XmlDocument();
+            input.LoadXml(Properties.Resources.ArrayOfPerson);
+
+            var received = input.Deserialize<List<Person>>();
+
+            Assert.Equal(4, received.Count);
+            Assert.Equal(27, received[0].Age);
+            Assert.Equal(45, received[1].Age);
+            Assert.Equal(35, received[2].Age);
+            Assert.Equal(30, received[3].Age);
+        }
+
+
+        #region Stubs
         public sealed class Person
         {
             public string FirstName { get; set; }
@@ -83,5 +116,6 @@ namespace Extensions.Serialization.Xml.Test
                 Age = (int) ((DateTime.Now - new DateTime(1906, 12, 9)).TotalDays / 365.25)
             }
         };
+        #endregion
     }
 }
