@@ -56,5 +56,24 @@ namespace Extensions.Serialization.Xml
                 }
             }
         }
+
+        public static XmlDocument ToXmlDocument(this XDocument xDocument)
+        {
+            var result = new XmlDocument();
+            using (var xmlReader = xDocument.CreateReader())
+            {
+                result.Load(xmlReader);
+            }
+            return result;
+        }
+
+        public static XDocument ToXDocument(this XmlDocument xmlDocument)
+        {
+            using (var reader = new XmlNodeReader(xmlDocument))
+            {
+                reader.MoveToContent();
+                return XDocument.Load(reader);
+            }
+        }
     }
 }

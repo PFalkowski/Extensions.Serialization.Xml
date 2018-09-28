@@ -36,11 +36,12 @@ namespace Extensions.Serialization.Xml.Test
             var input = XDocument.Parse(Properties.Resources.ArrayOfPerson);
             var received = input.Deserialize<List<Person>>();
 
-            Assert.Equal(4, received.Count);
-            Assert.Equal(27, received[0].Age);
-            Assert.Equal(45, received[1].Age);
-            Assert.Equal(35, received[2].Age);
-            Assert.Equal(30, received[3].Age);
+            var ages = new HashSet<int>(received.Select(p => p.Age));
+            Assert.Contains(27, ages);
+            Assert.Contains(35, ages);
+            Assert.Contains(45, ages);
+            Assert.Contains(30, ages);
+            Assert.Contains(18, ages);
         }
 
         [Fact]
@@ -66,14 +67,57 @@ namespace Extensions.Serialization.Xml.Test
 
             var received = input.Deserialize<List<Person>>();
 
-            Assert.Equal(4, received.Count);
-            Assert.Equal(27, received[0].Age);
-            Assert.Equal(45, received[1].Age);
-            Assert.Equal(35, received[2].Age);
-            Assert.Equal(30, received[3].Age);
+            var ages = new HashSet<int>(received.Select(p => p.Age));
+            Assert.Contains(27, ages);
+            Assert.Contains(35, ages);
+            Assert.Contains(45, ages);
+            Assert.Contains(30, ages);
+            Assert.Contains(18, ages);
         }
 
+        [Fact]
+        public void ToXDocumentConverts()
+        {
+            var input = new XmlDocument();
+            input.LoadXml(Properties.Resources.ArrayOfPerson);
 
+            var received = input.ToXDocument();
+
+            var firstNames = new HashSet<string>(from e in received.Descendants("FirstName") select e.Value);
+            var ages = new HashSet<int>(from e in received.Descendants("Age") select int.Parse(e.Value));
+
+            Assert.Equal(5, firstNames.Count);
+            Assert.Equal(5, ages.Count);
+            Assert.Contains("Alex", firstNames);
+            Assert.Contains("Cloe", firstNames);
+            Assert.Contains("Jack", firstNames);
+            Assert.Contains("John", firstNames);
+            Assert.Contains("Grace", firstNames);
+            Assert.Contains(27, ages);
+            Assert.Contains(35, ages);
+            Assert.Contains(45, ages);
+            Assert.Contains(30, ages);
+            Assert.Contains(18, ages);
+        }
+
+        [Fact]
+        public void ToXmlDocumentConverts()
+        {
+            var input = XDocument.Parse(Properties.Resources.ArrayOfPerson);
+
+            var received = input.ToXmlDocument();
+
+
+            var navigator = received.CreateNavigator();
+
+            Assert.Equal(5, (double)navigator.Evaluate("count(//FirstName)"));
+            Assert.Equal(5, (double)navigator.Evaluate("count(//Age)"));
+            Assert.Equal(27, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Alex\"]/Age/text())")));
+            Assert.Equal(35, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Cloe\"]/Age/text())")));
+            Assert.Equal(45, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Jack\"]/Age/text())")));
+            Assert.Equal(30, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())")));
+            Assert.Equal(18, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Grace\"]/Age/text())")));
+        }
         #region Stubs
         public sealed class Person
         {
@@ -113,7 +157,7 @@ namespace Extensions.Serialization.Xml.Test
             {
                 FirstName = "Grace",
                 LastName = "Hooper",
-                Age = (int) ((DateTime.Now - new DateTime(1906, 12, 9)).TotalDays / 365.25)
+                Age = 18
             }
         };
         #endregion
