@@ -118,7 +118,36 @@ namespace Extensions.Serialization.Xml.Test
             Assert.Equal(30, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())")));
             Assert.Equal(18, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Grace\"]/Age/text())")));
         }
+
+        [Fact]
+        public void ToXmlDocCulture()
+        {
+            var quote = JustAQuote;
+            var result = quote.SerializeToXmlDoc();
+
+            var navigator = result.CreateNavigator();
+
+            Assert.Equal(1, (double)navigator.Evaluate("count(//Open)"));
+            Assert.Equal(1, (double)navigator.Evaluate("count(//High)"));
+            Assert.Equal(quote.Open, (double)(navigator.Evaluate("sum(/StockQuote/Open/text())")));
+            Assert.Equal(quote.High, (double)(navigator.Evaluate("sum(/StockQuote/High/text())")));
+            Assert.Equal(quote.Low, (double)(navigator.Evaluate("sum(/StockQuote/Low/text())")));
+            Assert.Equal(quote.Close, (double)(navigator.Evaluate("sum(/StockQuote/Close/text())")));
+        }
+
         #region Stubs
+
+        public sealed class StockQuote
+        {
+            public string Ticker { get; set; }
+            public long Date { get; set; }
+            public double Open { get; set; }
+            public double High { get; set; }
+            public double Low { get; set; }
+            public double Close { get; set; }
+            public double Volume { get; set; }
+        }
+
         public sealed class Person
         {
             public string FirstName { get; set; }
@@ -127,7 +156,7 @@ namespace Extensions.Serialization.Xml.Test
         }
 
 
-        private List<Person> PersonsList { get; } = new List<Person>
+        private static List<Person> PersonsList { get; } = new List<Person>
         {
             new Person
             {
@@ -159,6 +188,16 @@ namespace Extensions.Serialization.Xml.Test
                 LastName = "Hooper",
                 Age = 18
             }
+        };
+
+        private static StockQuote JustAQuote => new StockQuote
+        {
+            Ticker = "TEST",
+            Open = 1.0,
+            High = 1.8,
+            Low = .9,
+            Close = 1.2,
+            Volume = 11.0
         };
         #endregion
     }
