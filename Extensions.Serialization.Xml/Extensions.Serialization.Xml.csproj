@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Piotr Falkowski</Authors>
+    <Company></Company>
+    <Description>Serialize and deserialize easly from XDocument, XmlDocument and convert between them.</Description>
+    <Copyright>Piotr Falkowski © 2018</Copyright>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/PFalkowski/Extensions.Serialization.Xml</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PFalkowski/Extensions.Serialization.Xml</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>serialization,netstandard,xml,xdocument,xmldocument,extension-methods</PackageTags>
+    <PackageReleaseNotes>initial release</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -53,10 +52,10 @@ namespace Extensions.Serialization.Xml.Test
 
             Assert.Equal(5, (double)navigator.Evaluate("count(//FirstName)"));
             Assert.Equal(5, (double)navigator.Evaluate("count(//Age)"));
-            Assert.Equal(27, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Alex\"]/Age/text())")));
-            Assert.Equal(35, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Cloe\"]/Age/text())")));
-            Assert.Equal(45, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Jack\"]/Age/text())")));
-            Assert.Equal(30, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())")));
+            Assert.Equal(27, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Alex\"]/Age/text())"));
+            Assert.Equal(35, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Cloe\"]/Age/text())"));
+            Assert.Equal(45, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Jack\"]/Age/text())"));
+            Assert.Equal(30, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())"));
         }
 
         [Fact]
@@ -112,11 +111,11 @@ namespace Extensions.Serialization.Xml.Test
 
             Assert.Equal(5, (double)navigator.Evaluate("count(//FirstName)"));
             Assert.Equal(5, (double)navigator.Evaluate("count(//Age)"));
-            Assert.Equal(27, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Alex\"]/Age/text())")));
-            Assert.Equal(35, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Cloe\"]/Age/text())")));
-            Assert.Equal(45, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Jack\"]/Age/text())")));
-            Assert.Equal(30, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())")));
-            Assert.Equal(18, (double)(navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Grace\"]/Age/text())")));
+            Assert.Equal(27, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Alex\"]/Age/text())"));
+            Assert.Equal(35, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Cloe\"]/Age/text())"));
+            Assert.Equal(45, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Jack\"]/Age/text())"));
+            Assert.Equal(30, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"John\"]/Age/text())"));
+            Assert.Equal(18, (double)navigator.Evaluate("sum(/ArrayOfPerson/Person[FirstName=\"Grace\"]/Age/text())"));
         }
 
         [Fact]
@@ -129,10 +128,10 @@ namespace Extensions.Serialization.Xml.Test
 
             Assert.Equal(1, (double)navigator.Evaluate("count(//Open)"));
             Assert.Equal(1, (double)navigator.Evaluate("count(//High)"));
-            Assert.Equal(quote.Open, (double)(navigator.Evaluate("sum(/StockQuote/Open/text())")));
-            Assert.Equal(quote.High, (double)(navigator.Evaluate("sum(/StockQuote/High/text())")));
-            Assert.Equal(quote.Low, (double)(navigator.Evaluate("sum(/StockQuote/Low/text())")));
-            Assert.Equal(quote.Close, (double)(navigator.Evaluate("sum(/StockQuote/Close/text())")));
+            Assert.Equal(quote.Open, (double)navigator.Evaluate("sum(/StockQuote/Open/text())"));
+            Assert.Equal(quote.High, (double)navigator.Evaluate("sum(/StockQuote/High/text())"));
+            Assert.Equal(quote.Low, (double)navigator.Evaluate("sum(/StockQuote/Low/text())"));
+            Assert.Equal(quote.Close, (double)navigator.Evaluate("sum(/StockQuote/Close/text())"));
         }
 
         #region Stubs
