@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -9,6 +10,7 @@ namespace Extensions.Serialization.Xml
     {
         public static XDocument SerializeToXDoc<T>(this T source)
         {
+            ArgumentNullException.ThrowIfNull(source);
             var result = new XDocument();
             using (var writer = result.CreateWriter())
             {
@@ -21,6 +23,7 @@ namespace Extensions.Serialization.Xml
         public static XmlDocument SerializeToXmlDoc<T>(this T source)
             where T : new()
         {
+            ArgumentNullException.ThrowIfNull(source);
             var result = new XmlDocument();
             using (var ms = new MemoryStream())
             {
@@ -38,7 +41,7 @@ namespace Extensions.Serialization.Xml
             using (var reader = serialized.CreateReader())
             {
                 var deserializer = new XmlSerializer(typeof(T));
-                return (T)deserializer.Deserialize(reader);
+                return (T)deserializer.Deserialize(reader)!;
             }
         }
 
@@ -52,7 +55,7 @@ namespace Extensions.Serialization.Xml
                 xmlStream.Position = 0;
                 using (TextReader reader = new StreamReader(xmlStream))
                 {
-                    return (T)xmlSerializer.Deserialize(reader);
+                    return (T)xmlSerializer.Deserialize(reader)!;
                 }
             }
         }
