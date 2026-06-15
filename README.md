@@ -1,4 +1,4 @@
-# Extensions.Serialization.Xml
+﻿# Extensions.Serialization.Xml
 
 [![CI](https://github.com/PFalkowski/Extensions.Serialization.Xml/actions/workflows/ci.yml/badge.svg)](https://github.com/PFalkowski/Extensions.Serialization.Xml/actions/workflows/ci.yml)
 [![NuGet version](https://img.shields.io/nuget/v/Extensions.Serialization.Xml.svg)](https://www.nuget.org/packages/Extensions.Serialization.Xml/)
@@ -9,6 +9,12 @@
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-yellow.svg)](https://www.buymeacoffee.com/piotrfalkowski)
 
 XML serialization extension methods for `XDocument` and `XmlDocument`, plus conversion between the two.
+
+## Install
+
+```bash
+dotnet add package Extensions.Serialization.Xml
+```
 
 ## Usage
 
