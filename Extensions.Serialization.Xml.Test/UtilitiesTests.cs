@@ -48,7 +48,7 @@ namespace Extensions.Serialization.Xml.Test
         {
             var tested = PersonsList.SerializeToXmlDoc();
 
-            var navigator = tested.CreateNavigator();
+            var navigator = tested.CreateNavigator()!;
 
             Assert.Equal(5, (double)navigator.Evaluate("count(//FirstName)"));
             Assert.Equal(5, (double)navigator.Evaluate("count(//Age)"));
@@ -107,7 +107,7 @@ namespace Extensions.Serialization.Xml.Test
             var received = input.ToXmlDocument();
 
 
-            var navigator = received.CreateNavigator();
+            var navigator = received.CreateNavigator()!;
 
             Assert.Equal(5, (double)navigator.Evaluate("count(//FirstName)"));
             Assert.Equal(5, (double)navigator.Evaluate("count(//Age)"));
@@ -124,7 +124,7 @@ namespace Extensions.Serialization.Xml.Test
             var quote = JustAQuote;
             var result = quote.SerializeToXmlDoc();
 
-            var navigator = result.CreateNavigator();
+            var navigator = result.CreateNavigator()!;
 
             Assert.Equal(1, (double)navigator.Evaluate("count(//Open)"));
             Assert.Equal(1, (double)navigator.Evaluate("count(//High)"));
@@ -138,7 +138,7 @@ namespace Extensions.Serialization.Xml.Test
 
         public sealed class StockQuote
         {
-            public string Ticker { get; set; }
+            public string Ticker { get; set; } = null!;
             public long Date { get; set; }
             public double Open { get; set; }
             public double High { get; set; }
@@ -149,8 +149,8 @@ namespace Extensions.Serialization.Xml.Test
 
         public sealed class Person
         {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
+            public string FirstName { get; set; } = null!;
+            public string LastName { get; set; } = null!;
             public int Age { get; set; }
         }
 
